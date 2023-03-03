@@ -1,0 +1,4 @@
+127.0.0.1 - - [02/Mar/2023:21:34:11 -0600] "GET / HTTP/1.1" 404 751
+127.0.0.1 - - [02/Mar/2023:21:34:13 -0600] "GET /webproject4830-T2-0304-Hausman/ HTTP/1.1" 404 786
+127.0.0.1 - - [02/Mar/2023:21:35:40 -0600] "GET /webproject4830-T2-0304-Hausman/ HTTP/1.1" 404 786
+127.0.0.1 - - [02/Mar/2023:21:35:45 -0600] "GET /webproject4830-T2-0304-Hausman/MyServletHausman HTTP/1.1" 200 14

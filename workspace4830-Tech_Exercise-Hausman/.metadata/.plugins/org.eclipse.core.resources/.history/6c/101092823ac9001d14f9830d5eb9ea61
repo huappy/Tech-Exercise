@@ -1,0 +1,46 @@
+import java.sql.SQLException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+@WebServlet("/InsertTask")
+public class TaskDisplay extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	
+	public TaskDisplay() {
+		super();
+	}
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Connection connection = null;
+		try {
+			//Set connection and attempt to create table
+			TaskDatabaseConnection.getConnection(getServletContext());
+			connection = TaskDatabaseConnection.connection;
+			Statement state = connection.createStatement();
+			String createTableSQL = "CREATE TABLE TaskList " +
+								"(id INTEGER not NULL AUTO_INCREMENT, " +
+								"TASK VARCHAR(500), " +
+								"DATE_CREATED VARCHAR(50), " +
+								"COMPLETE_BY VARCHAR(50), " +
+								"PRIMARY KEY ( id ))";
+			state.executeUpdate(createTableSQL);
+		} catch (SQLException e) {
+			System.out.print("Table already exists.\n");		}
+		
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+}

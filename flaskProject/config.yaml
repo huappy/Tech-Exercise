@@ -1,0 +1,4 @@
+mysql_host: 'ec2-3-136-157-109.us-east-2.compute.amazonaws.com:3306'
+mysql_user: 'Hap'
+mysql_password: 'CJoy410'
+mysql_db: 'tech_exercises'

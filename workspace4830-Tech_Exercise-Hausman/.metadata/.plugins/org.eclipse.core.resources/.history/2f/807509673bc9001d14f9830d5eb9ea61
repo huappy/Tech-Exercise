@@ -1,0 +1,59 @@
+import java.sql.SQLException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+@WebServlet("/InsertTask")
+public class TaskDisplay extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	
+	public TaskDisplay() {
+		super();
+	}
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Connection connection = null;
+			//Set connection and attempt to create table
+			TaskDatabaseConnection.getConnection(getServletContext());
+			connection = TaskDatabaseConnection.connection;
+			
+			try {
+				String selectSQL = "SELECT * FROM TaskList";
+				// String thisUser = "user%";
+				response.getWriter().println(selectSQL + "<br>");
+				response.getWriter().println("-------------------------------------------------<br>");
+				PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+				// preparedStatement.setString(1, thisUser);
+				ResultSet rs = preparedStatement.executeQuery();
+				
+				//TODO: Use this as the task display. Combine this loop with the content display stuff in InserTask. Probably will have to delete the getWriter statements below
+				while (rs.next()) {
+					String id = rs.getString("ID");
+					String task = rs.getString("TASK");
+					String date = rs.getString("DATE_CREATED");
+					String complete_by = rs.getString("COMPLETE_BY");
+					response.getWriter().append(id + ", ");
+					response.getWriter().append("TASK: " + task + ", ");
+					response.getWriter().append("DATE: " + date + ", ");
+					response.getWriter().append("COMPLETE BY: " + complete_by + ".<br>");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+}

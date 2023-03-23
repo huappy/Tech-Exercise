@@ -1,0 +1,51 @@
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.awt.Button;
+import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+@WebServlet("/DeleteTask")
+public class DeleteTask extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	
+	public DeleteTask() {
+		super();
+	}
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Connection connection = null;
+			
+			try {
+				//Set connection and attempt to delete row
+				TaskDatabaseConnection.getConnection(getServletContext());
+				connection = TaskDatabaseConnection.connection;
+				Statement state = connection.createStatement();
+				String id = request.getParameter("id");
+				String deleteSQL = "DELETE FROM TaskList where id="+id;
+				state.executeUpdate(deleteSQL);
+			} catch (SQLException e) {
+				System.out.print("Something went wrong.\n");}
+			
+
+
+			
+	}
+		
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+	
+}
